@@ -1,6 +1,6 @@
 FROM node:18-alpine
 
-LABEL org.opencontainers.image.source=https://github.com/riyaknol11/pi-shaped-workshop-yourname
+LABEL org.opencontainers.image.source=https://github.com/riyaknol11/pi-shaped-workshop-riya
 
 WORKDIR /usr/src/app
 
