@@ -4,7 +4,7 @@ A simple "Hello, World!" REST API containerized with Docker.
 
 ## What's in this project?
 
-This is a super basic Express.js API that responds with a friendly JSON message and timestamp when you hit the root endpoint. Nothing fancy, but it's perfect for demonstrating how Docker works!
+This is a super basic Express.js API that responds with a friendly JSON message and timestamp when you hit the root endpoint.
 
 ## How to run it locally
 
@@ -18,8 +18,8 @@ npm start
 With Docker:
 
 ```bash
-docker build -t hello-api .
-docker run -p 8080:8080 hello-api
+docker build -t hello-api-task .
+docker run -p 8080:8080 hello-api-task
 ```
 
 Then just visit http://localhost:8080 in your browser or run `curl http://localhost:8080`
