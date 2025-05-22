@@ -2,20 +2,21 @@
 
 This guide demonstrates Kubernetes architecture, scheduling, and node affinity using a simple Hello World API.
 
-## What You'll Learn
+## What has been covered!
 
 - How to deploy applications to Kubernetes
 - Resource management with requests and limits
 - Node affinity and pod scheduling
 - Production-ready deployment practices
 
-## Prerequisites
+## Prerequisites to install:
 
 Make sure you have these installed:
 - `kubectl` (Kubernetes command-line tool)
 - `minikube` (Local Kubernetes cluster)
 - `docker` (Container runtime)
 
+![alt text](<Screenshot from 2025-05-22 15-57-29.png>)
 ---
 
 ## Application Overview
