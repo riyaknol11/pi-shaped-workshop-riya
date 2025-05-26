@@ -42,7 +42,7 @@ Testing:
 bash# Via LoadBalancer (if external IP available)
 curl http://<EXTERNAL_IP>
 
-# Via NodePort fallback
+    # Via NodePort fallback
 curl http://192.168.49.2:31742
 
 
@@ -61,22 +61,18 @@ Deployment Status
 
 Testing Commands
 
-![
-    
-](<Screenshot from 2025-05-26 13-05-24.png>)
-![
-    
-](<Screenshot from 2025-05-26 13-06-09.png>)
+!(<Screenshot from 2025-05-26 13-05-24.png>)
+!(<Screenshot from 2025-05-26 13-06-09.png>)
 
 Verify Deployment
 
-![
-](<Screenshot from 2025-05-26 12-47-51.png>)
+!(<Screenshot from 2025-05-26 12-47-51.png>)
 
 
 
 Questions 
-1. How would you expose an internal microservice (e.g., user-auth) differently than a public-facing frontend in a Kubernetes-based product?
+# 1. How would you expose an internal microservice (e.g., user-auth) differently than a public-facing frontend in a Kubernetes-based product?
+
 Internal Microservice (user-auth):
 
     Uses ClusterIP service type
@@ -93,11 +89,11 @@ Public Frontend:
 
 Explained using Example:
 
-Auth service: Only your app's backend can access or talk to it.
-Public Frontend: Can be accessed by everyone on internet
+    Auth service: Only your app's backend can access or talk to it.
+    Public Frontend: Can be accessed by everyone on internet
 
 
-2. Why use Ingress instead of LoadBalancer for each microservice?
+# 2. Why use Ingress instead of LoadBalancer for each microservice?
 Cost & Management problem of loadbalancer:
 
     Each LoadBalancer will cost Separate cloud bill
