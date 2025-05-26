@@ -103,9 +103,9 @@ Cost & Management problem of loadbalancer:
     Hard to apply same security rules everywhere
 
 Ingress benefits:
-Cheaper: One load balancer handles all services
-Easier: One IP address, one SSL certificate
-Smarter: Can route traffic based on URL paths
+    Cheaper: One load balancer handles all services
+    Easier: One IP address, one SSL certificate
+    Smarter: Can route traffic based on URL paths
 
 
 
