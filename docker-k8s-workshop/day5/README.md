@@ -34,7 +34,7 @@ The application consists of:
 
 ## Core Concept Questions & Answers
 
-### Why are liveness and readiness probes critical in keeping a product's user experience stable and reliable?
+### 1.  Why are liveness and readiness probes critical in keeping a product's user experience stable and reliable?
 
 **Liveness Probes - Ensuring Application Health:**
 
@@ -88,7 +88,7 @@ Readiness probes ensure users never hit pods that aren't ready to serve requests
 - **Automatic Recovery**: Self-healing system reduces operational overhead
 - **Reliable Deployments**: Updates happen without service interruption
 
-### How does HPA help in handling flash sales, seasonal load spikes, or traffic surges in real-world applications like an e-commerce platform?
+### 2.   How does HPA help in handling flash sales, seasonal load spikes, or traffic surges in real-world applications like an e-commerce platform?
 
 **Horizontal Pod Autoscaler (HPA) - Elastic Scaling for Business Critical Events:**
 
@@ -208,8 +208,7 @@ spec:
 - Kubernetes cluster with metrics-server enabled
 - kubectl configured to connect to your cluster
 
-![Metrics-server-enabled]
-(Deployment.png)
+![Metrics-server-enabled](Deployment.png)
 
 ### Step 1: Deploy the Application
 ```bash
@@ -227,8 +226,8 @@ kubectl apply -f manifests/frontend.yaml
 kubectl apply -f manifests/hpa.yaml
 ```
 
-![Deployed config.maps and other applications]
-(<Screenshot from 2025-05-30 14-33-17.png>)
+
+![Deployed config.maps and other applications](<Screenshot from 2025-05-30 14-33-17-1.png>)
 
 
 ### Step 2: Verify Deployment
@@ -262,27 +261,23 @@ kubectl top pods -n ecommerce --containers
 ```
 
 ## ![Verifying deployment, applied load testing and monitoring sclaing of events]
-(<Screenshot from 2025-05-30 14-34-18.png>)
+![](<Screenshot from 2025-05-30 14-34-18.png>)
 
 ### Initial Deployment State
 <!-- Add screenshot of initial pod deployment -->
-*(<Screenshot from 2025-05-30 14-34-40.png>)*
-
-### HPA Status Before Load Test
-<!-- Add screenshot of HPA showing target metrics -->
-*Screenshot: HPA metrics before applying load*
+![](<Screenshot from 2025-05-30 14-34-40.png>)
 
 ### Resource Usage During Load Test
 <!-- Add screenshot of kubectl top pods during high load -->
-*!(<Screenshot from 2025-05-30 15-09-28.png>)*
+![](<Screenshot from 2025-05-30 15-09-28.png>)
 
 ### Scaling Event in Progress
 <!-- Add screenshot of pods scaling up -->
-*(<Screenshot from 2025-05-30 15-10-51.png>)*
+![](<Screenshot from 2025-05-30 15-10-51.png>)
 
 ### Resource usage
 <!-- Add screenshot of pods scaling back down -->
-*(<Screenshot from 2025-05-30 15-11-50.png>)*
+![](<Screenshot from 2025-05-30 15-11-50.png>)
 
 ## Key Optimizations Implemented
 
@@ -301,7 +296,7 @@ kubectl top pods -n ecommerce --containers
 - **Service-specific Configuration**: Different probe strategies for different service types
 - **Failure Tolerance**: Appropriate thresholds for different failure scenarios
 
-## Cleanup
+## Cleanup after completion
 ```bash
 # Remove all resources
 kubectl delete namespace ecommerce
