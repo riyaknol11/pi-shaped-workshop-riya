@@ -1,0 +1,110 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: ecommerce
+data:
+  default.conf: |
+    server {
+        listen 80;
+        server_name localhost;
+        
+        # Health check endpoints
+        location /health {
+            access_log off;
+            return 200 "healthy\n";
+            add_header Content-Type text/plain;
+        }
+        
+        # API endpoints simulation
+        location /api/products {
+            return 200 '{"products": ["laptop", "phone", "tablet"]}';
+            add_header Content-Type application/json;
+        }
+        
+        location /api/orders {
+            return 200 '{"status": "processing"}';
+            add_header Content-Type application/json;
+        }
+        
+        # Default catch-all
+        location / {
+            return 200 "Backend API Server";
+            add_header Content-Type text/plain;
+        }
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+  namespace: ecommerce
+data:
+  default.conf: |
+    server {
+        listen 80;
+        server_name localhost;
+        
+        # Health check endpoints
+        location /health {
+            access_log off;
+            return 200 "healthy\n";
+            add_header Content-Type text/plain;
+        }
+        
+        location /ready {
+            access_log off;
+            return 200 "ready\n";
+            add_header Content-Type text/plain;
+        }
+        
+        # Frontend routes
+        location / {
+            root /usr/share/nginx/html;
+            index index.html;
+            try_files $uri $uri/ /index.html;
+        }
+        
+        # API proxy to backend
+        location /api/ {
+            proxy_pass http://backend-service:80/api/;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+    }
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>E-commerce Platform</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 40px; }
+            .container { max-width: 800px; margin: 0 auto; }
+            .product { border: 1px solid #ddd; padding: 20px; margin: 10px 0; }
+            button { background: #007cba; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>E-commerce Platform - Day 5 Demo</h1>
+            <div class="product">
+                <h3>Sample Product</h3>
+                <p>This is a demo e-commerce frontend for Kubernetes scaling demonstration.</p>
+                <button onclick="simulateLoad()">Add to Cart (Simulate Load)</button>
+            </div>
+            <div id="status"></div>
+        </div>
+        <script>
+            function simulateLoad() {
+                fetch('/api/products')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('status').innerHTML = 'Products loaded: ' + JSON.stringify(data);
+                    })
+                    .catch(error => {
+                        document.getElementById('status').innerHTML = 'Error: ' + error;
+                    });
+            }
+        </script>
+    </body>
+    </html>

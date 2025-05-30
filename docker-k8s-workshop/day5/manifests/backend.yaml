@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: ecommerce
+  labels:
+    app: backend
+    tier: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+        tier: backend
+    spec:
+      containers:
+      - name: backend
+        image: nginx:alpine  
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"    # Minimum guaranteed memory
+            cpu: "50m"        # 0.05 CPU cores guaranteed
+          limits:
+            memory: "128Mi"   # Maximum memory usage
+            cpu: "200m"       # Maximum 0.2 CPU cores
+        # Ensures container is healthy and restarts if needed
+        # Critical for maintaining service availability during high load
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        # READINESS PROBE - Ensures pod is ready to receive traffic
+        # Prevents sending requests to pods that aren't ready to handle them
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          successThreshold: 1
+          failureThreshold: 3
+        env:
+        - name: NODE_ENV
+          value: "production"
+        # Volume mount for custom nginx config (simulating API endpoints)
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: backend-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  namespace: ecommerce
+  labels:
+    app: backend
+spec:
+  selector:
+    app: backend
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  type: ClusterIP 

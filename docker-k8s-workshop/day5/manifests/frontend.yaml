@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: ecommerce
+  labels:
+    app: frontend
+    tier: frontend
+spec:
+  replicas: 3  # Higher replica count for user-facing service
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+        tier: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        # RESOURCE OPTIMIZATION for frontend workloads
+        # Frontend typically needs more memory for static assets but less CPU
+        resources:
+          requests:
+            memory: "32Mi"     # Lower memory for static content serving
+            cpu: "25m"         # Minimal CPU for nginx
+          limits:
+            memory: "64Mi"     # Conservative limit for cost control
+            cpu: "100m"        # Sufficient for nginx + basic JS processing
+        # HEALTH CHECKS optimized for frontend performance
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 15  # Longer delay for frontend initialization
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 3        # Faster checks for better user experience
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 2
+        env:
+        - name: BACKEND_URL
+          value: "http://backend-service:80"
+        - name: CACHE_ENABLED
+          value: "true"
+        volumeMounts:
+        - name: frontend-config
+          mountPath: /etc/nginx/conf.d
+        - name: static-content
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: frontend-config
+        configMap:
+          name: frontend-config
+      - name: static-content
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: ecommerce
+  labels:
+    app: frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  type: LoadBalancer 
