@@ -208,7 +208,7 @@ spec:
 - Kubernetes cluster with metrics-server enabled
 - kubectl configured to connect to your cluster
 
-![Metrics-server-enabled](Deployment.png)
+![Metrics-server-enabled](screenshots/metric-server-enabled.png)
 
 ### Step 1: Deploy the Application
 ```bash
@@ -227,7 +227,7 @@ kubectl apply -f manifests/hpa.yaml
 ```
 
 
-![Deployed config.maps and other applications](<Screenshot from 2025-05-30 14-33-17-1.png>)
+![Deployed config.maps and other applications](screenshots/Deployment.png)
 
 
 ### Step 2: Verify Deployment
@@ -260,24 +260,27 @@ kubectl describe hpa -n ecommerce
 kubectl top pods -n ecommerce --containers
 ```
 
-## ![Verifying deployment, applied load testing and monitoring sclaing of events]
-![](<Screenshot from 2025-05-30 14-34-18.png>)
+## ![Verifying deployment, applied load testing and monitoring sclaing of events](<screenshots/Load Testing and Monitoring.png>)
 
 ### Initial Deployment State
 <!-- Add screenshot of initial pod deployment -->
-![](<Screenshot from 2025-05-30 14-34-40.png>)
+![](screenshots/Deployment.png)
 
 ### Resource Usage During Load Test
 <!-- Add screenshot of kubectl top pods during high load -->
-![](<Screenshot from 2025-05-30 15-09-28.png>)
+![](screenshots/ResourceUsage.png)
 
 ### Scaling Event in Progress
 <!-- Add screenshot of pods scaling up -->
-![](<Screenshot from 2025-05-30 15-10-51.png>)
+![](screenshots/ScalingEvents.png)
 
 ### Resource usage
 <!-- Add screenshot of pods scaling back down -->
-![](<Screenshot from 2025-05-30 15-11-50.png>)
+![](<screenshots/Screenshot from 2025-05-30 15-11-50.png>)
+
+![](<screenshots/Screenshot from 2025-05-30 14-34-40.png>)
+
+![](<screenshots/Screenshot from 2025-05-30 14-45-08.png>)
 
 ## Key Optimizations Implemented
 
